@@ -11,6 +11,8 @@ import datetime
 from django.urls import reverse_lazy
 import logging
 from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
 User = get_user_model()
 # Create your models here.
 
@@ -126,6 +128,11 @@ def log_user_logged_in(sender, user, request, **kwargs):
         error_log.error(
             "log_user_logged_in request: %s, error: %s" % (request))
 
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 @receiver(user_logged_out)
 def log_user_logged_out(sender, user, request, **kwargs):

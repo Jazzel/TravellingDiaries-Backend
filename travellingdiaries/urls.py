@@ -18,7 +18,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import HomeView
+from accounts.api.views import HelloView
 from accounts.views import MyProfileView
+
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -27,6 +29,7 @@ urlpatterns = [
     path('account/', include('accounts.urls', namespace='profiles')),
     path('posts/', include('post.urls', namespace='posts')),
     path('api/posts/', include('post.api.urls', namespace='posts-api')),
+    path('api/accounts/', include('accounts.api.urls', namespace='accounts-api')),
     path('reviews/', include('reviews.urls', namespace='reviews')),
     path('destinations/', include('destinations.urls',
                                   namespace='destinations')),
@@ -34,6 +37,7 @@ urlpatterns = [
                                       namespace='destination-api')),
     path('<slug:username>', MyProfileView.as_view(), name='user_profile'),
     path('weather/', include('weather.urls', namespace='weather')),
+    path('hello/', HelloView.as_view(), name='hello'),
 
 ]
 if settings.DEBUG:

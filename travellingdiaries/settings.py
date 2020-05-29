@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'cities_light',
     'phonenumber_field',
     'rest_framework',
+    'rest_framework.authtoken', 
+    'rest_auth',
     # ? apps
     'accounts',
     'reviews',
@@ -66,6 +68,14 @@ INSTALLED_APPS = [
     'weather',
     
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
