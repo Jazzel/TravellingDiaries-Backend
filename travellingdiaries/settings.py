@@ -31,13 +31,66 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # ? Modules
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'corsheaders',
+    # ? Authorization
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
+    'crispy_forms',
+    'cities_light',
+    'phonenumber_field',
+    'rest_framework',
+    # ? apps
+    'accounts',
+    'reviews',
+    'destinations',
+    'amenity',
+    'hotels',
+    'restaurants',
+    'packages',
+    'transport',
+    'rentals',
+    'diary',
+    'groups',
+    'post',
+    'weather',
+    
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '807840282319-upqg6p4t0fsgerr8ia0nbb1n8qt7qjj1.apps.googleusercontent.com',
+            'secret': 'fJD_2SlYjlYrmTcVJSl6Yw66',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+    },
+    'Twitter': {
+        'APP': {
+            'client_id': 'QOJcfOD9NzmxwrAhpqVdAt1uf',
+            'secret': 'U8StBEmmJjeKuPEBpuUvua4N0u4E8w66s0EaMJNMgTLzuEXwSt',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +100,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'travellingdiaries.urls'
@@ -54,7 +109,7 @@ ROOT_URLCONF = 'travellingdiaries.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,7 +160,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Karachi'
 
 USE_I18N = True
 
@@ -117,4 +172,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+SITE_ID = 1
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static-storage"), ]
+STATIC_ROOT = os.path.join(BASE_DIR, "static-serve")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+EMAIL_FILE_PATH = os.path.join((BASE_DIR), "mails")
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'travellingdiaries2019@gmail.com'
+SERVER_EMAIL = 'travellingdiaries2019@gmail.com'
+DEFAULT_FROM_EMAIL = 'travellingdiaries2019@gmail.com'
+EMAIL_HOST_PASSWORD = 'Travel1234'
+EMAIL_USE_TLS = True
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
